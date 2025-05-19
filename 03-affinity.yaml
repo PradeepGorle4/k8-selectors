@@ -22,3 +22,12 @@ spec:
     operator: "Equal"
     value: "gpu"
     effect: "NoExecute"
+
+# 🏗 Tolerations vs. Affinit
+
+#   - Tolerations allow pods to be scheduled on nodes with taints. They don't force the pod onto a specific node, but rather ensure it’s not rejected by nodes with matching taints.
+# - Affinity (Node Affinity & Pod Affinity) actively influences where a pod should be scheduled based on specific rules.
+# 🔍 Why Do We Need Affinity When Tolerations Exist?
+# - Tolerations Prevent Rejection, But Don't Choose Nodes
+# - Tolerations allow a pod to be scheduled on tainted nodes, but Kubernetes may still place the pod elsewhere.
+# - If you need a pod to be placed on a specific set of nodes, Affinity helps enforce that.
