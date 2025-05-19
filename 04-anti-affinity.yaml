@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: anti-affinity
+  labels:
+    purpose: anti-affinity-demo
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: hardware
+            operator: NotIn # anti-affinity #It will schedule the pod in nodes where hardware=gpu taint is not present. 
+            # If all of the nodes are tainted, then k8 will consider the tolerations provided below
+            values:
+            - gpu
+  containers:
+  - name: nginx
+    image: nginx
+  tolerations:
+  - key: "hardware"
+    operator: "Equal"
+    value: "gpu"
+    effect: "NoExecute"
